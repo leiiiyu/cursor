@@ -106,7 +106,7 @@ Project-level skills live in `.cursor/skills/` (not `.github/skills/` or `.agent
 Secrets for these skills live in **local environment variables only**. Do not write `~/.aliyun/config.json` or run `aliyun configure` / `gh auth login`.
 
 - GitHub: `GITHUB_TOKEN`
-- Aliyun: `ALIBABACLOUD_ACCESS_KEY_ID`, `ALIBABACLOUD_ACCESS_KEY_SECRET`（optional `ALIBABACLOUD_REGION_ID`）
+- Aliyun: `ALIYUN_AK` / `ALIYUN_SK`（官方同义名 `ALIBABACLOUD_ACCESS_KEY_ID` / `ALIBABACLOUD_ACCESS_KEY_SECRET`；optional `ALIBABACLOUD_REGION_ID`）
 
 `npx skills add -a cursor` copies into `.agents/skills/` by default; move those folders into `.cursor/skills/` before committing.
 

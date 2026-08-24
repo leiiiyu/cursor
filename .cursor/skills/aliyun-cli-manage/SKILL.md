@@ -12,15 +12,29 @@ Category: tool
 
 **密钥只放在本地环境变量里。** 不要运行 `aliyun configure`，不要写 `~/.aliyun/config.json`，不要把 AccessKey 写入仓库、聊天或证据文件。
 
-| 变量 | 用途 |
+本仓库 Cursor 环境里的实际变量名是：
+
+| 本地变量 | 用途 |
 | --- | --- |
-| `ALIBABACLOUD_ACCESS_KEY_ID` | AccessKey ID（必有） |
-| `ALIBABACLOUD_ACCESS_KEY_SECRET` | AccessKey Secret（必有） |
+| `ALIYUN_AK` | AccessKey ID（必有） |
+| `ALIYUN_SK` | AccessKey Secret（必有） |
+
+调用 `aliyun` 前先映射到官方变量（只 export，不要 echo）：
+
+```bash
+export ALIBABACLOUD_ACCESS_KEY_ID="${ALIBABACLOUD_ACCESS_KEY_ID:-$ALIYUN_AK}"
+export ALIBABACLOUD_ACCESS_KEY_SECRET="${ALIBABACLOUD_ACCESS_KEY_SECRET:-$ALIYUN_SK}"
+export ALIBABA_CLOUD_ACCESS_KEY_ID="${ALIBABA_CLOUD_ACCESS_KEY_ID:-$ALIBABACLOUD_ACCESS_KEY_ID}"
+export ALIBABA_CLOUD_ACCESS_KEY_SECRET="${ALIBABA_CLOUD_ACCESS_KEY_SECRET:-$ALIBABACLOUD_ACCESS_KEY_SECRET}"
+```
+
+| 官方 / 可选变量 | 用途 |
+| --- | --- |
+| `ALIBABACLOUD_ACCESS_KEY_ID` | 映射后的 AccessKey ID |
+| `ALIBABACLOUD_ACCESS_KEY_SECRET` | 映射后的 AccessKey Secret |
 | `ALIBABACLOUD_REGION_ID` | 默认地域（可选；未设置时在命令上显式传 `--region`） |
 
-`aliyun` CLI 会直接读取上述环境变量。执行前只检查变量是否已设置（打印 `SET`/`UNSET`，不要打印值）。未设置则停止并说明缺的是环境变量，而不是去交互配置 profile。
-
-兼容同义变量：`ALIBABA_CLOUD_ACCESS_KEY_ID` / `ALIBABA_CLOUD_ACCESS_KEY_SECRET`。
+执行前只检查变量是否已设置（打印 `SET`/`UNSET`，不要打印值）。查找顺序：`ALIBABACLOUD_*` → `ALIBABA_CLOUD_*` → `ALIYUN_AK` / `ALIYUN_SK`。未设置则停止，不要去交互配置 profile。
 
 ## Validation
 
@@ -45,7 +59,7 @@ Pass criteria: command exits 0 and `output/aliyun-cli-manage/validate-help.txt` 
 
 1. Run the version guard script first (check first, then decide whether to upgrade).
 2. If not installed or check interval reached, the script downloads and installs the latest official package.
-3. Confirm local environment variables `ALIBABACLOUD_ACCESS_KEY_ID` and `ALIBABACLOUD_ACCESS_KEY_SECRET` are set. Do not create an Aliyun CLI profile.
+3. Confirm local environment variables. Prefer `ALIYUN_AK` / `ALIYUN_SK` in this Cursor environment; also accept `ALIBABACLOUD_ACCESS_KEY_ID` / `ALIBABACLOUD_ACCESS_KEY_SECRET`. Map them before calling `aliyun`. Do not create an Aliyun CLI profile.
 4. Use `aliyun <product> --help` / `aliyun <product> <ApiName> --help` to confirm parameters.
 5. Run read-only queries first, then mutating operations. Pass `--region` when `ALIBABACLOUD_REGION_ID` is unset.
 
@@ -95,8 +109,8 @@ This repository keeps Aliyun keys in **local environment variables**, not in a C
 
 ```bash
 # 只检查是否存在，不要 echo 变量值
-test -n "${ALIBABACLOUD_ACCESS_KEY_ID:-}" && echo ALIBABACLOUD_ACCESS_KEY_ID=SET || echo ALIBABACLOUD_ACCESS_KEY_ID=UNSET
-test -n "${ALIBABACLOUD_ACCESS_KEY_SECRET:-}" && echo ALIBABACLOUD_ACCESS_KEY_SECRET=SET || echo ALIBABACLOUD_ACCESS_KEY_SECRET=UNSET
+test -n "${ALIYUN_AK:-${ALIBABACLOUD_ACCESS_KEY_ID:-}}" && echo ALIYUN_AK/ALIBABACLOUD_ACCESS_KEY_ID=SET || echo ALIYUN_AK/ALIBABACLOUD_ACCESS_KEY_ID=UNSET
+test -n "${ALIYUN_SK:-${ALIBABACLOUD_ACCESS_KEY_SECRET:-}}" && echo ALIYUN_SK/ALIBABACLOUD_ACCESS_KEY_SECRET=SET || echo ALIYUN_SK/ALIBABACLOUD_ACCESS_KEY_SECRET=UNSET
 ```
 
 Do **not** run `aliyun configure set` and do **not** write `~/.aliyun/config.json` for this project. If you need to inspect CLI auth state without printing secrets:
@@ -150,7 +164,7 @@ aliyun sls ListProject --endpoint cn-hangzhou.log.aliyuncs.com --size 100
 
 ## Prerequisites
 
-- Credentials must already be present as local environment variables (`ALIBABACLOUD_ACCESS_KEY_ID`, `ALIBABACLOUD_ACCESS_KEY_SECRET`; optional `ALIBABACLOUD_REGION_ID`).
+- Credentials must already be present as local environment variables. In this Cursor environment that is `ALIYUN_AK` / `ALIYUN_SK`; also accept `ALIBABACLOUD_ACCESS_KEY_ID` / `ALIBABACLOUD_ACCESS_KEY_SECRET` (optional `ALIBABACLOUD_REGION_ID`).
 - Do not prompt the user to paste AccessKeys into the terminal, and do not persist them to disk.
 - If region is unclear, ask the user before running mutating operations.
 
