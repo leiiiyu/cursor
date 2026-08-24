@@ -93,8 +93,17 @@ Do not:
 - Prefer small, descriptive commit messages. Existing history is informal (`update`, `update OS`); new work should still be readable, e.g. `docs: add OS memory-management notes`.
 - Do not force-push `main` unless the owner asked to rewrite history.
 - Never copy `GITHUB_TOKEN` into files, commit messages, or command output.
+- For GitHub-specific procedures (issues, pull requests, `gh`, REST), load `.cursor/skills/github-workflow/SKILL.md`.
 
-For GitHub-specific procedures (issues, pull requests, `gh`, REST), load the project skill `.github/skills/github-workflow/SKILL.md`.
+## Project skills
+
+Project-level skills live in `.cursor/skills/` (not `.github/skills/` or `.agents/skills/`):
+
+- `github-workflow` — issues, pull requests, `gh`, REST
+- `alibabacloud-find-skills` — search and install official Alibaba Cloud skills
+- `aliyun-cli-manage` — Aliyun CLI / OpenAPI (upstream renamed from `alicloud-platform-aliyun-cli`)
+
+`npx skills add -a cursor` copies into `.agents/skills/` by default; move those folders into `.cursor/skills/` before committing.
 
 ## Checks before finishing
 

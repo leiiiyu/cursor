@@ -59,7 +59,7 @@ Labels are optional; do not invent a label taxonomy unless one already exists on
 
 ## Pull requests
 
-This repo often receives direct commits to `main`. Open a pull request when the user wants review, or when changing agent config (`AGENTS.md`, `CLAUDE.md`, `.github/skills/**`) together with a large notes edit.
+This repo often receives direct commits to `main`. Open a pull request when the user wants review, or when changing agent config (`AGENTS.md`, `CLAUDE.md`, `.cursor/skills/**`) together with a large notes edit.
 
 PR title: short, imperative, Chinese or English is fine (`docs: add github workflow skill`).
 

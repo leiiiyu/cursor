@@ -19,7 +19,7 @@ Claude Code reads this file at the start of every session. Shared project rules 
 ## Tools
 
 - Use the `GITHUB_TOKEN` environment variable for GitHub API / `gh` calls. Never echo it.
-- For GitHub issue, pull request, release, or Actions work, follow `.github/skills/github-workflow/SKILL.md`.
+- For GitHub issue, pull request, release, or Actions work, follow `.cursor/skills/github-workflow/SKILL.md`.
 - Do not run package installs or start servers; there are none to start.
 
 ## Memory
