@@ -18,8 +18,9 @@ Claude Code reads this file at the start of every session. Shared project rules 
 
 ## Tools
 
-- Use the `GITHUB_TOKEN` environment variable for GitHub API / `gh` calls. Never echo it.
+- GitHub and Aliyun keys are already in local environment variables (`GITHUB_TOKEN`, `ALIBABACLOUD_ACCESS_KEY_ID`, `ALIBABACLOUD_ACCESS_KEY_SECRET`). Never echo them; do not write CLI profile files.
 - For GitHub issue, pull request, release, or Actions work, follow `.cursor/skills/github-workflow/SKILL.md`.
+- For Aliyun CLI / OpenAPI, follow `.cursor/skills/aliyun-cli-manage/SKILL.md`.
 - Do not run package installs or start servers; there are none to start.
 
 ## Memory

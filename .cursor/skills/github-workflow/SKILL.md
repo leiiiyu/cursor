@@ -14,6 +14,7 @@ Use this skill whenever the task touches GitHub itself rather than only local Ma
 
 ## Auth
 
+- GitHub 密钥只放在**本地环境变量** `GITHUB_TOKEN`（`GH_TOKEN` 同义）里。不要从 `~/.config/gh/hosts.yml`、shell history、截图或仓库文件里抄 token，也不要再运行 `gh auth login`。
 - Read credentials from the `GITHUB_TOKEN` environment variable. Do not read tokens out of shell history, screenshots, or committed files.
 - Prefer the GitHub REST/GraphQL API or `gh` with that token. Example (never print the token):
 

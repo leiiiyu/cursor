@@ -103,6 +103,11 @@ Project-level skills live in `.cursor/skills/` (not `.github/skills/` or `.agent
 - `alibabacloud-find-skills` — search and install official Alibaba Cloud skills
 - `aliyun-cli-manage` — Aliyun CLI / OpenAPI (upstream renamed from `alicloud-platform-aliyun-cli`)
 
+Secrets for these skills live in **local environment variables only**. Do not write `~/.aliyun/config.json` or run `aliyun configure` / `gh auth login`.
+
+- GitHub: `GITHUB_TOKEN`
+- Aliyun: `ALIBABACLOUD_ACCESS_KEY_ID`, `ALIBABACLOUD_ACCESS_KEY_SECRET`（optional `ALIBABACLOUD_REGION_ID`）
+
 `npx skills add -a cursor` copies into `.agents/skills/` by default; move those folders into `.cursor/skills/` before committing.
 
 ## Checks before finishing
